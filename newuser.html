@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<style>
+ #message {position: fixed; top:50%; list-style-type: none; margin: 0; padding: 0;}
+</style>
+<body>
+<ul id="message"></ul>
+
+<h4 align="center"><font size="5">Please rate the following movies (1-5 (best), or 0 if not seen</font></h4>
+<form action="">
+    
+<table border=1 align="center">
+  <tr>
+    <th>MovieID</th>
+    <th>Movies</th>
+    <th>Ratings</th>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td>Twelve Monkeys</td>
+    <td><input id="m1"/></td>    
+  </tr>
+  <tr>
+    <td>62</td>
+    <td>Mr. Holland's Opus (1995)</td>
+    <td><input id="m2"/> </td>   
+  </tr>
+  <tr>
+    <td>50</td>
+    <td>Usual Suspects, The (1995)</td>
+    <td><input id="m3"/> </td>   
+  </tr>
+  <tr>
+    <td>70</td>
+    <td>From Dusk Till Dawn (1996)</td>
+    <td><input id="m4"/> </td>    
+  </tr>
+  <tr>
+    <td>112</td>
+    <td>Rumble in the Bronx (Hont faan kui)</td>
+    <td><input id="m5"/> </td>    
+  </tr>
+  <tr>
+    <td>165</td>
+    <td>Die Hard: With a Vengeance (1995)</td>
+    <td><input id="m6"/> </td>
+  </tr>
+  <tr>
+    <td>350</td>
+    <td>Client, The (1994)</td>
+    <td><input id="m7"/> </td>
+  </tr>
+  <tr>
+    <td>480</td>
+    <td>Jurassic Park (1993)</td>
+    <td> <input id="m8"/> </td>
+  </tr>
+</table>
+    <h1 align="center"><button align="center">Submit</button></h1>
+</form>
+
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      var socket = io();
+      $('form').submit(function(){
+	$('#message').empty();
+	socket.emit('userratings', $('#m1').val()+","+$('#m2').val()+","+$('#m3').val()+","+$('#m4').val()+","+$('#m5').val()+","+$('#m6').val()+","+$('#m7').val()+","+$('#m8').val());
+        //$('#m1').val('');$('#m2').val('');$('#m3').val('');$('#m4').val('');$('#m5').val('');$('#m6').val('');$('#m7').val('');$('#m8').val('');
+        return false;
+      });
+ 	
+	socket.on('userratings', function(msg){
+        $('#message').append($('<li>').text(msg));
+      });
+	</script>
+
+</body>
+</html>
